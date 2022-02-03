@@ -1,0 +1,13 @@
+spring:
+  datasource:
+    url: jdbc:sqlserver://localhost:1433;database=MDsTailor
+    username: sa
+    password: root
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+
+
+
