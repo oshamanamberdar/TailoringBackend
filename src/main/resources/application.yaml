@@ -1,3 +1,6 @@
+jwt:
+  secret: '2X(&X8S[M;@(P2Jp@7$S&NHe=3!?QAk|C:|miE^g7yLZ6hF{]eWRo`mW!Bzr<'
+
 spring:
   datasource:
     url: jdbc:sqlserver://localhost:1433;database=MDsTailor

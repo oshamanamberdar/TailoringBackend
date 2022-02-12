@@ -28,6 +28,7 @@ public class Customer implements Serializable {
     private String name;
     private String phone;
     private String email;
+    private String address;
 
     @JsonIgnore
     @OneToOne(cascade = CascadeType.ALL)
