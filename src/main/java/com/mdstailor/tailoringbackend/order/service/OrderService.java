@@ -1,8 +1,10 @@
 package com.mdstailor.tailoringbackend.order.service;
 
+import com.mdstailor.tailoringbackend.customer.repository.CustomerRepository;
 import com.mdstailor.tailoringbackend.exceptions.OrderNotFoundException.OrderNotFoundException;
 import com.mdstailor.tailoringbackend.order.entity.Order;
 import com.mdstailor.tailoringbackend.order.repository.OrderRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,9 +21,7 @@ public class OrderService {
     public OrderService(OrderRepository orderRepository) {
         this.orderRepository = orderRepository;
     }
-    public Order addOrder(Order order){
-        return orderRepository.save(order);
-    }
+
     public List<Order> findAllOrder(){
         return orderRepository.findAll();
     }

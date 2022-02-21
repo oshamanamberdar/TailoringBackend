@@ -1,13 +1,10 @@
 package com.mdstailor.tailoringbackend.customer.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.mdstailor.tailoringbackend.design.entity.Design;
 import com.mdstailor.tailoringbackend.fabric.entity.Fabric;
-import com.mdstailor.tailoringbackend.measurement.entity.Measurement;
 import com.mdstailor.tailoringbackend.order.entity.Order;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -28,20 +25,9 @@ public class Customer implements Serializable {
     private String name;
     private String phone;
     private String email;
-    private String address;
-
-    @JsonIgnore
-    @OneToOne(cascade = CascadeType.ALL)
-    private Measurement measurement;
-
-    @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL)
-    private Set<Design> design;
-
-
-    @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL)
-    private Set<Order> orders;
+    private String city;
+    private String state;
+    private String country;
 
     @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER)
@@ -51,6 +37,8 @@ public class Customer implements Serializable {
             @JoinColumn(name = "fabric_id", referencedColumnName = "id")
     })
     private Set<Fabric> fabrics;
+
+
 
 
 }
