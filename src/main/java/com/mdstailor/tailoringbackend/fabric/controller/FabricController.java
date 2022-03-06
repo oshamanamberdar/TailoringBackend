@@ -1,8 +1,12 @@
 package com.mdstailor.tailoringbackend.fabric.controller;
 
+import com.mdstailor.tailoringbackend.exceptions.CustomerNotFoundException.CustomerNotFoundException;
+import com.mdstailor.tailoringbackend.exceptions.SupplierNotFoundException.SupplierNotFoundException;
 import com.mdstailor.tailoringbackend.fabric.entity.Fabric;
 import com.mdstailor.tailoringbackend.fabric.repository.FabricRepository;
 import com.mdstailor.tailoringbackend.fabric.service.FabricService;
+import com.mdstailor.tailoringbackend.order.entity.Order;
+import com.mdstailor.tailoringbackend.supplier.Repository.SupplierRepository;
 import com.mdstailor.tailoringbackend.supplier.entity.Supplier;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -20,6 +24,7 @@ import java.util.List;
 public class FabricController {
     private final FabricService fabricService;
     private final FabricRepository fabricRepository;
+    private final SupplierRepository supplierRepository;
 
     @GetMapping("/all")
     public ResponseEntity<List<Fabric>>getAllFabrics(){
@@ -43,18 +48,23 @@ public class FabricController {
         fabricService.deleteFabric(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-    @PutMapping("/update/{id}")
-    Fabric updateFabric(@RequestBody Fabric fabric, @PathVariable Long id) {
-        return fabricRepository.findById(id).map(fabric1 -> {
-            fabric1.setName(fabric.getName());
-            fabric1.setColor(fabric.getColor());
-            fabric1.setCostPrice(fabric.getCostPrice());
-            fabric1.setQuantity(fabric.getQuantity());
-            return fabricRepository.save(fabric1);
-        }).orElseGet(()-> {
-            fabric.setId(id);
-            return fabricRepository.save(fabric);
-        });
 
+    @PostMapping("/supplier/{supplierId}/fabric")
+    public ResponseEntity<Fabric> addFabric(@PathVariable(value = "supplierId") Long supplierId, @RequestBody Fabric fabric){
+        Fabric fabrics = supplierRepository.findSupplierById(supplierId).map(supplier -> {
+            fabric.setSupplier(supplier);
+            return fabricRepository.save(fabric);
+        }).orElseThrow(()-> new SupplierNotFoundException("Supplier by id" + supplierId));
+        return new ResponseEntity<>(fabrics, HttpStatus.CREATED);
     }
+
+    @RequestMapping("/supplier/{supplierId}/fabric")
+    public ResponseEntity<List<Fabric>> getAllFabricBySupplierId(@PathVariable(value = "supplierId")Long supplierId){
+        if(!supplierRepository.existsById(supplierId)){
+            throw new SupplierNotFoundException("Not found Supplier by id"+ supplierId);
+        }
+        List<Fabric> fabrics = fabricRepository.findBySupplierId(supplierId);
+        return new ResponseEntity<>(fabrics, HttpStatus.OK);
+    }
+
 }

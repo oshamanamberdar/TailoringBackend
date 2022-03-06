@@ -1,7 +1,9 @@
 package com.mdstailor.tailoringbackend.order.controller;
 
+import com.mdstailor.tailoringbackend.customer.entity.Customer;
 import com.mdstailor.tailoringbackend.customer.repository.CustomerRepository;
 import com.mdstailor.tailoringbackend.exceptions.CustomerNotFoundException.CustomerNotFoundException;
+import com.mdstailor.tailoringbackend.exceptions.OrderNotFoundException.OrderNotFoundException;
 import com.mdstailor.tailoringbackend.order.entity.Order;
 import com.mdstailor.tailoringbackend.order.repository.OrderRepository;
 import com.mdstailor.tailoringbackend.order.service.OrderService;
@@ -28,7 +30,7 @@ public class OrderController {
         return new ResponseEntity<>(orders, HttpStatus.OK);
     }
 
-    @RequestMapping("find/{id}")
+    @RequestMapping("/find/{id}")
     public ResponseEntity<Order> getOrderById(@PathVariable("id") Long id){
         Order order= orderService.findOrderById(id);
         return new ResponseEntity<>(order, HttpStatus.OK);
@@ -54,6 +56,12 @@ public class OrderController {
         List<Order> orders = orderRepository.findByCustomerId(customerId);
         return new ResponseEntity<>(orders, HttpStatus.OK);
     }
+    @GetMapping("/{id}")
+    public ResponseEntity<Order> getOrderByCustomerId(@PathVariable(value = "id") Long id){
+        Order order = orderRepository.findById(id).orElseThrow(() -> new OrderNotFoundException("Not found order with id" + id));
+        return new ResponseEntity<>(order, HttpStatus.OK);
+    }
+
 
 
 }

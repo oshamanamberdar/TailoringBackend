@@ -36,19 +36,6 @@ public class SupplierController {
         return new ResponseEntity<>(newSupplier, HttpStatus.CREATED);
     }
 
-    @PutMapping("/update/{id}")
-    Supplier updateSupplier(@RequestBody Supplier supplier, @PathVariable Long id) {
-        return supplierRepository.findById(id).map(supplier1 -> {
-            supplier1.setName(supplier.getName());
-            supplier1.setPhone(supplier.getPhone());
-            supplier1.setFabricList(supplier.getFabricList());
-            return supplierRepository.save(supplier1);
-        }).orElseGet(()-> {
-            supplier.setId(id);
-            return supplierRepository.save(supplier);
-        });
-
-    }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteSupplier(@PathVariable("id") Long id){

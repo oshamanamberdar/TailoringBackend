@@ -1,5 +1,5 @@
-jwt:
-  secret: '2X(&X8S[M;@(P2Jp@7$S&NHe=3!?QAk|C:|miE^g7yLZ6hF{]eWRo`mW!Bzr<'
+
+
 
 spring:
   datasource:
@@ -13,7 +13,9 @@ spring:
     open-in-view: false
   servlet:
     multipart:
-      max-file-size: 2MB
-      max-request-size: 2MB
+      max-file-size: 10MB
+      max-request-size: 11MB
+server:
+  port: 8081
 
 

@@ -13,8 +13,6 @@ import java.util.Set;
 
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 @Entity
 @Table(name = "CUSTOMERS")
 public class Customer implements Serializable {
@@ -28,17 +26,26 @@ public class Customer implements Serializable {
     private String city;
     private String state;
     private String country;
+    private byte[] profileImage;
 
-    @JsonIgnore
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name="fabric_table", joinColumns = {
-            @JoinColumn(name = "customer_id", referencedColumnName ="id" )
-    }, inverseJoinColumns = {
-            @JoinColumn(name = "fabric_id", referencedColumnName = "id")
-    })
-    private Set<Fabric> fabrics;
+    public Customer() {
+        super();
+    }
 
+    public Customer(Long id, String name, String phone, String email, String city, String state, String country, byte[] profileImage) {
+        this.id = id;
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.city = city;
+        this.state = state;
+        this.country = country;
+        this.profileImage = profileImage;
+    }
 
+    public Customer(String originalFilename, String contentType, byte[] compressBytes) {
+    }
 
-
+    public Customer(byte[] decompressBytes) {
+    }
 }

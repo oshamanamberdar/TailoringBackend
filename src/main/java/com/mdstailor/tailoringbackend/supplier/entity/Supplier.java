@@ -21,9 +21,6 @@ public class Supplier implements Serializable {
     private String name;
     private String phone;
     private String address;
-    @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL)
-    private Set<Fabric> fabricList;
 
 
 }

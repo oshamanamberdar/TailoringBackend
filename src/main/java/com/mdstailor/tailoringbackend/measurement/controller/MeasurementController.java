@@ -27,12 +27,12 @@ public class MeasurementController {
         List<Measurement> measurements = measurementService.findAllMeasurement();
         return new ResponseEntity<>(measurements, HttpStatus.OK);
     }
-    @RequestMapping("find/{id}")
+    @RequestMapping("/find/{id}")
     public ResponseEntity<Measurement> getMeasurementById(@PathVariable("id") Long id){
         Measurement measurement= measurementService.findMeasurementById(id);
         return new ResponseEntity<>(measurement, HttpStatus.OK);
     }
-    @PostMapping("/customer/{customerId}/measurement")
+    @PostMapping("/customers/{customerId}/measurement")
     public ResponseEntity<Measurement> addMeasurement(@PathVariable(value = "customerId") Long customerId, @RequestBody Measurement measurement){
         Measurement measurements = customerRepository.findCustomerById(customerId).map(customer -> {
             measurement.setCustomer(customer);

@@ -27,6 +27,13 @@ public class Measurement implements Serializable {
     private  int coatSleeveLength;
     private  int coatHalfBack;
     private  int coatNeck;
+    private  int shirtLength;
+    private  int shirtChest;
+    private  int shirtWaist;
+    private  int shirtHip;
+    private  int shirtShoulder;
+    private  int shirtSleeveLength;
+    private  int shirtNeck;
     private  int pantLength;
     private  int pantWaist;
     private  int pantHip;

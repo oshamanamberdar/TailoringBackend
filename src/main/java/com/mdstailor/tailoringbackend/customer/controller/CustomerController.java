@@ -1,23 +1,39 @@
 package com.mdstailor.tailoringbackend.customer.controller;
 
 import com.mdstailor.tailoringbackend.customer.entity.Customer;
+import com.mdstailor.tailoringbackend.customer.repository.CustomerRepository;
 import com.mdstailor.tailoringbackend.customer.service.CustomerService;
+import com.mdstailor.tailoringbackend.exceptions.CustomerNotFoundException.CustomerNotFoundException;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.web.multipart.MultipartFile;
+import java.io.IOException;
 import java.util.List;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.Optional;
+import java.util.zip.DataFormatException;
+import java.util.zip.Deflater;
+import java.util.zip.Inflater;
 
+@Log4j2
 @RestController
-@RequestMapping("/customer")
+@RequestMapping("customer")
 public class CustomerController {
 
+
+
     private final CustomerService customerService;
+    private final CustomerRepository customerRepository;
 
     @Autowired
-    public CustomerController(CustomerService customerService) {
+    public CustomerController(CustomerService customerService, CustomerRepository customerRepository) {
         this.customerService = customerService;
+        this.customerRepository = customerRepository;
     }
 
     @RequestMapping("/all")
@@ -44,9 +60,10 @@ public class CustomerController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-//    @PutMapping("/update/id")
-//    public ResponseEntity<Customer> updateCustomerById(@RequestBody Customer customer, @PathVariable Long id){
-//        Customer updatedCustomer = customerService.updateCustomerById(id);
-//        return new ResponseEntity<>(updatedCustomer, HttpStatus.OK);
-//    }
+
+
+
+
+
+
 }
