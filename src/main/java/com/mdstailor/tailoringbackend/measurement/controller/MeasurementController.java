@@ -55,4 +55,37 @@ public class MeasurementController {
         return new ResponseEntity<>(measurements, HttpStatus.OK);
     }
 
+    @PutMapping("/update/{id}")
+    public Measurement updateMeasurement(@RequestBody Measurement measurement, @PathVariable Long id) {
+        return measurementRepository.findById(id).map(measurement1 -> {
+            measurement1.setCoatLength(measurement.getCoatLength());
+            measurement1.setCoatChest(measurement.getCoatChest());
+            measurement1.setCoatWaist(measurement.getCoatWaist());
+            measurement1.setCoatHip(measurement.getCoatHip());
+            measurement1.setCoatShoulder(measurement.getCoatShoulder());
+            measurement1.setCoatHalfBack(measurement.getCoatHalfBack());
+            measurement1.setCoatSleeveLength(measurement.getCoatSleeveLength());
+            measurement1.setCoatNeck(measurement.getCoatNeck());
+            measurement1.setPantLength(measurement.getPantLength());
+            measurement1.setPantWaist(measurement.getPantWaist());
+            measurement1.setPantHip(measurement.getPantHip());
+            measurement1.setPantThigh(measurement.getPantThigh());
+            measurement1.setPantKnee(measurement.getPantKnee());
+            measurement1.setPantBottom(measurement.getPantBottom());
+            measurement1.setPantCrouch(measurement.getPantCrouch());
+            measurement1.setShirtLength(measurement.getShirtLength());
+            measurement1.setShirtChest(measurement.getShirtChest());
+            measurement1.setShirtWaist(measurement.getShirtWaist());
+            measurement1.setShirtHip(measurement.getShirtHip());
+            measurement1.setShirtShoulder(measurement.getShirtShoulder());
+            measurement1.setShirtSleeveLength(measurement.getShirtSleeveLength());
+            measurement1.setShirtNeck(measurement.getShirtNeck());
+            return measurementRepository.save(measurement1);
+        }).orElseGet(()-> {
+            measurement.setId(id);
+            return measurementRepository.save(measurement);
+        });
+    }
+
+
 }

@@ -1,8 +1,7 @@
-package com.mdstailor.tailoringbackend.fabric.entity;
+package com.mdstailor.tailoringbackend.design.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mdstailor.tailoringbackend.customer.entity.Customer;
-import com.mdstailor.tailoringbackend.supplier.entity.Supplier;
+import com.mdstailor.tailoringbackend.order.entity.Order;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,27 +9,27 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Data
 @Entity
-public class Fabric implements Serializable {
+public class Design {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
-    private String shadeNumber;
-    private Float quantity;
-    private Float costPerMeter;
-    private Float totalCost;
-
+    private String lapelSize;
+    private Long numberOfButton;
+    private String vent;
+    private String kaajStyle;
+    private String shirtCuff;
+    private Long backPocketNumber;
 
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
-    @JoinColumn(name = "supplier_id", nullable = false)
+    @JoinColumn(name = "order_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private Supplier supplier;
+    private Order order;
+
 
 
 }

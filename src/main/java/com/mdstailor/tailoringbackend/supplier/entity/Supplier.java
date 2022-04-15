@@ -21,6 +21,9 @@ public class Supplier implements Serializable {
     private String name;
     private String phone;
     private String address;
+    private Double totalDue;
+    private Double clearedDue;
+    private Double leftDue;
 
 
 }

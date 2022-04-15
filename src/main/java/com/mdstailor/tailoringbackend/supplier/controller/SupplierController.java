@@ -1,5 +1,6 @@
 package com.mdstailor.tailoringbackend.supplier.controller;
 
+import com.mdstailor.tailoringbackend.customer.entity.Customer;
 import com.mdstailor.tailoringbackend.supplier.Repository.SupplierRepository;
 import com.mdstailor.tailoringbackend.supplier.entity.Supplier;
 import com.mdstailor.tailoringbackend.supplier.service.SupplierService;
@@ -42,5 +43,23 @@ public class SupplierController {
         supplierService.deleteSupplier(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @PutMapping("/update/{id}")
+    Supplier updateSupplier(@RequestBody Supplier supplier, @PathVariable Long id) {
+        return supplierRepository.findById(id).map(supplier1 -> {
+            supplier1.setName(supplier.getName());
+            supplier1.setPhone(supplier.getPhone());
+            supplier1.setAddress(supplier.getAddress());
+            supplier1.setTotalDue(supplier.getTotalDue());
+            supplier1.setClearedDue(supplier.getClearedDue());
+            supplier1.setLeftDue(supplier.getLeftDue());
+            return supplierRepository.save(supplier1);
+        }).orElseGet(()-> {
+            supplier.setId(id);
+            return supplierRepository.save(supplier);
+        });
+
+    }
+
 
 }

@@ -1,11 +1,22 @@
-
-
-
 spring:
   datasource:
     url: jdbc:sqlserver://localhost:1433;database=MDsTailor
     username: sa
     password: root
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: np01cp4a190177@islingtoncollege.edu.np
+    password: aqlchjpxuerjfbjr
+    properties:
+      mail:
+        smtp:
+          starttls:
+            enable : true
+            required: true
+          auth: true
+
+            
 
   jpa:
     hibernate:
@@ -15,7 +26,10 @@ spring:
     multipart:
       max-file-size: 10MB
       max-request-size: 11MB
+      enabled: true
 server:
   port: 8081
+
+
 
 

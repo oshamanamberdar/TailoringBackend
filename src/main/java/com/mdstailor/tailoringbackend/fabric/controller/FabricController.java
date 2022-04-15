@@ -11,11 +11,17 @@ import com.mdstailor.tailoringbackend.supplier.entity.Supplier;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 @RequiredArgsConstructor
@@ -66,5 +72,55 @@ public class FabricController {
         List<Fabric> fabrics = fabricRepository.findBySupplierId(supplierId);
         return new ResponseEntity<>(fabrics, HttpStatus.OK);
     }
+
+    @PutMapping("/update/{id}")
+    Fabric updateFabric(@RequestBody Fabric fabric, @PathVariable Long id) {
+        return fabricRepository.findById(id).map(fabric1 -> {
+            fabric1.setName(fabric.getName());
+            fabric1.setCostPerMeter(fabric.getCostPerMeter());
+            fabric1.setQuantity(fabric.getQuantity());
+            fabric1.setTotalCost(fabric.getTotalCost());
+            return fabricRepository.save(fabric1);
+        }).orElseGet(()-> {
+            fabric.setId(id);
+            return fabricRepository.save(fabric);
+        });
+
+    }
+
+    @GetMapping("/fabrics/{pageNo}/{pageSize}")
+    public List<Fabric> getPaginatedFabrics(@PathVariable int pageNo,
+                                            @PathVariable int pageSize) {
+        return fabricService.findPaginated(pageNo,pageSize);
+    }
+
+    @GetMapping("/allFabric")
+    public ResponseEntity<Map<String, Object>> getAllFabrics(
+            @RequestParam(required = false) String shadeNumber,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "3") int size
+    ){
+      try {
+          List<Fabric> fabrics = new ArrayList<Fabric>();
+          Pageable paging = PageRequest.of(page, size);
+          Page<Fabric> fabricPage;
+          if(shadeNumber == null)
+              fabricPage = fabricRepository.findAll(paging);
+          else
+              fabricPage = fabricRepository.findByShadeNumber(shadeNumber, paging);
+          fabrics = fabricPage.getContent();
+          Map<String, Object> response = new HashMap<>();
+          response.put("fabrics", fabrics);
+          response.put("currentPage", fabricPage.getNumber());
+          response.put("totalItems", fabricPage.getTotalElements());
+          response.put("totalPages", fabricPage.getTotalPages());
+          return new ResponseEntity<>(response, HttpStatus.OK);
+
+      }catch (Exception e) {
+          return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+      }
+    }
+
+
 
 }
