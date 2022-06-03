@@ -22,9 +22,7 @@ public class Customer implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(nullable = false, unique = true)
     private String name;
-    @Column(nullable = false, unique = true)
     private String phone;
     private String email;
     private String city;

@@ -12,4 +12,6 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
 
     void deleteCustomerById(Long id);
 
+    Customer findByPhone(String phone);
+
 }

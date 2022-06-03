@@ -41,6 +41,7 @@ public class Order implements Serializable {
     private String status;
     private String item;
     private String quantity;
+    private String paymentMethod;
 
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "customer_id", nullable = false)

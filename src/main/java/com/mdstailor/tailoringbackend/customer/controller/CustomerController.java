@@ -79,6 +79,11 @@ public class CustomerController {
         });
 
     }
+    @GetMapping("/findByName/{phone}")
+    public ResponseEntity<Customer> findCustomerByNumber(@PathVariable String phone){
+        Customer customerPhone = customerRepository.findByPhone(phone);
+        return new ResponseEntity<>(customerPhone, HttpStatus.OK);
+    }
 
     @PostMapping("/profile")
     public ResponseEntity<?> uploadProfilePicture(@RequestParam("file") MultipartFile file,

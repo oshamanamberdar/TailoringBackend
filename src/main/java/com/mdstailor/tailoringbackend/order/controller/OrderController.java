@@ -82,6 +82,7 @@ public class OrderController {
             order1.setItem(order.getItem());
             order1.setQuantity(order.getQuantity());
             order1.setStatus(order.getStatus());
+            order1.setPaymentMethod(order.getPaymentMethod());
             return orderRepository.save(order1);
         }).orElseGet(()-> {
             order.setId(id);
